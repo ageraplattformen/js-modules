@@ -3,7 +3,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const utmSource = urlParams.get("utm_source");
 
-const anForms = document.querySelectorAll("[data-an='true']");
+const anForms = document.querySelectorAll("[data-an-bridge='true']");
 
 
 async function postData(url, headers, body, form, event) {
