@@ -3,8 +3,6 @@
 function receive(form, entries) {
     // create hidden fields
     entries.forEach(([key, value]) => {
-
-        // console.log(`key: ${key}, value: ${value}`);
         const sanitizedValue = document.createTextNode(value).textContent;
         const addHtml = `<input type="hidden" id="${key}" name="${key}" value="${sanitizedValue}">`;
         form.insertAdjacentHTML("afterbegin", addHtml);
