@@ -6,9 +6,9 @@ function anSubmit(form) {
     const submitButton = form.querySelector('input[type="submit"]');
     const submitText = submitButton.value;
     const options = {
-        preventDefault: JSON.parse(form.dataset.anPreventdefault.toLowerCase()) ?? true,
-        redirect: form.getAttribute("redirect") ?? false,
-        endpoint: form.getAttribute("action") ?? undefined
+        preventDefault: Boolean(form.dataset.anPreventdefault) || true,
+        redirect: form.getAttribute("redirect") || false,
+        endpoint: form.getAttribute("action") || undefined
     }
 
     function prepAnData(form, options) {
@@ -54,7 +54,6 @@ function anSubmit(form) {
 
 
     function prepWfData(form) {
-        console.log("prepping wf data")
         const formData = new FormData(form);
         const searchParams = new URLSearchParams();
         const wfUrl = new URL(document.querySelector("html").dataset.wfSite, 'https://webflow.com/api/v1/form/')
@@ -113,7 +112,7 @@ function anSubmit(form) {
         if (options.redirect) {
             const utmParams = new URLSearchParams(window.location.search).toString();
             const updatedRedirectUrl = options.redirect + (options.redirect.includes('?') ? '&' : '?') + utmParams.toString();
-            window.location.href = updatedRedirectUrl;
+            window.location.href = options.redirect; //updatedRedirectUrl; - No added UTM
         } else {
             console.log("No redirect")
         };
