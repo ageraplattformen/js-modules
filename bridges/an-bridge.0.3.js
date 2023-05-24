@@ -6,7 +6,7 @@ function anSubmit(form) {
     const submitButton = form.querySelector('input[type="submit"]');
     const submitText = submitButton.value;
     const options = {
-        preventDefault: Boolean(form.dataset.anPreventdefault) || true,
+        saveWeblowForm: Boolean(form.dataset.saveWeblowForm) || false,
         redirect: form.getAttribute("redirect") || false,
         endpoint: form.getAttribute("action") || undefined
     }
@@ -162,7 +162,7 @@ function anSubmit(form) {
             if (options.endpoint) {
                 requestList.push(prepAnData(form, options));
             }
-            if (!options.preventDefault) { // prevent default is False
+            if (options.saveWeblowForm) { // save webflow form
                 requestList.push(prepWfData(form));
             }
             if (requestList.length > 0) {
