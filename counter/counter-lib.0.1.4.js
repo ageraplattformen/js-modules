@@ -90,7 +90,7 @@ function ageraCounter() {
     }
 
     function showElement(element, current, options) {
-        if (current > options.hideBelow) {
+        if (current >= options.hideBelow) {
             element.style.opacity = 1;
         }
     }
@@ -100,7 +100,7 @@ function ageraCounter() {
         const counterName = element.dataset.counterName || "default";
         const options = {
             target: element.dataset.counterTarget || 0,
-            hideBelow: element.dataset.counterHideBelow || 50,
+            hideBelow: element.dataset.counterHideBelow || 0,
             autoTarget: element.dataset.counterAutoTarget || true,
             locale: document.documentElement.lang || element.dataset.counterLocale || undefined,  //"sv-SE", 
             compact: element.dataset.counterCompact || false,
