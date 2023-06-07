@@ -13,7 +13,6 @@ function anSubmit(form) {
         endpoint: form.getAttribute("action") || undefined,
         addUtm: Boolean(form.dataset.anUtmRedirect) || false
     }
-    console.log("utm: ", options.addUtm)
 
     function prepAnData(form, options) {
         const formData = new FormData(form);
