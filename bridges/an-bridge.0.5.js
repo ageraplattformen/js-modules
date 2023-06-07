@@ -10,8 +10,10 @@ function anSubmit(form) {
     const options = {
         saveWeblowForm: Boolean(form.dataset.saveWeblowForm) || false,
         redirect: form.getAttribute("redirect") || false,
-        endpoint: form.getAttribute("action") || undefined
+        endpoint: form.getAttribute("action") || undefined,
+        addUtm: Boolean(form.dataset.anUtmRedirect) || false
     }
+    console.log("utm: ", options.addUtm)
 
     function prepAnData(form, options) {
         const formData = new FormData(form);
@@ -115,9 +117,13 @@ function anSubmit(form) {
 
     function redirect() {
         if (options.redirect) {
-            const utmParams = new URLSearchParams(window.location.search).toString();
-            const updatedRedirectUrl = options.redirect + (options.redirect.includes('?') ? '&' : '?') + utmParams.toString();
-            window.location.href = options.redirect; //updatedRedirectUrl; - No added UTM
+            if (options.addUtm) {
+                const utmParams = new URLSearchParams(window.location.search).toString();
+                const updatedRedirectUrl = options.redirect + (options.redirect.includes('?') ? '&' : '?') + utmParams;
+                window.location.href = updatedRedirectUrl;
+            } else {
+                window.location.href = options.redirect;
+            }
         } else {
             console.log("No redirect")
         };
