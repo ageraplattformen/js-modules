@@ -1,4 +1,4 @@
-// agera-sync.0.0.2.js 23-06-08 20:59
+// agera-sync.0.0.2.js 23-06-08 22:41
 // Data attributes: data-crm, data-redirect-utm, data-counter-update
 function ageraSync(form) {
     const constants = {
@@ -235,7 +235,7 @@ function ageraSync(form) {
 
             const counterUpdate = form.dataset.counterUpdate;
 
-            if (crm === "webflow" && options.endpoint) {
+            if (crm === "webflow") {
                 requestList.push(prepWfData(form));
             }
             if (crm === "actionnetwork" && options.endpoint) {
