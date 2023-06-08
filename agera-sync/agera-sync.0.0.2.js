@@ -1,4 +1,4 @@
-// agera-sync.0.0.2.js 23-06-08 20:37
+// agera-sync.0.0.2.js 23-06-08 20:59
 // Data attributes: data-crm, data-redirect-utm, data-counter-update
 function ageraSync(form) {
     const constants = {
@@ -88,7 +88,7 @@ function ageraSync(form) {
     function prepMailChimpData(form) {
         const formData = new FormData(form);
         const uriEncodedBody = new URLSearchParams(formData);
-        uriEncodedBody.append("UTM", constants.thisUrl.searchParams.toString());
+        uriEncodedBody.append("UTM", constants.thisUrl.searchParams.toString() || "");
         const data = {
             url: options.endpoint.replace('post?', 'post-json?') + '&c=?',
             method: "POST",
