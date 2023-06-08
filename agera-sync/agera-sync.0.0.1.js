@@ -95,7 +95,6 @@ function ageraSync(form) {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             dataType: "jsonp",
-            //body: JSON.stringify(Object.fromEntries(formData)),
             body: uriEncodedBody.toString()
         };
         return data;
