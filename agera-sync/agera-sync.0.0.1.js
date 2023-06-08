@@ -1,5 +1,5 @@
 // agera-sync.0.0.1.js
-// Data attributes: data-crm, data-redirect-url, 
+// Data attributes: data-crm, data-redirect-url, data-counter-update
 function ageraSync(form) {
     const constants = {
         thisUrl: new URL(window.location.href),
@@ -16,8 +16,6 @@ function ageraSync(form) {
         endpoint: form.getAttribute("action") || undefined,
         addUtm: Boolean(form.dataset.redirectUtm) || true
     }
-
-    console.log("form json: ", JSON.stringify(Object.fromEntries(new FormData(form))))
 
     function prepAnData(form) {
         const formData = new FormData(form);
@@ -91,10 +89,13 @@ function ageraSync(form) {
         const formData = new FormData(form);
         const uriEncodedBody = new URLSearchParams(formData);
         const data = {
-            url: new URL(options.endpoint).toString(),
+            url: options.endpoint.replace('post?', 'post-json?') + '&c=?',
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: uriEncodedBody,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            dataType: "jsonp",
+            body: JSON.stringify(Object.fromEntries(formData))
         };
         return data;
     }
@@ -170,21 +171,40 @@ function ageraSync(form) {
             console.log("No redirect defined")
         };
     };
+    async function ajaxCall(request) {
+        try {
+            const result = await $.ajax({
+                url: request.url,
+                type: request.method,
+                data: request.body,
+                dataType: request.dataType,
+            });
 
+            return result;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error);
+        }
+    };
     async function handleFetchRequests(requestList, form) {
         try {
             const promises = requestList.map(async (request) => {
-                const response = await fetch(request.url, {
-                    method: request.method,
-                    headers: request.headers,
-                    body: request.body
-                });
+                if (!request.dataType) {
+                    const response = await fetch(request.url, {
+                        method: request.method,
+                        headers: request.headers,
+                        body: request.body,
+                    });
 
-                if (!response.ok) {
-                    formStatus(form, false)
-                    throw new Error('Response error');
+                    if (!response.ok) {
+                        formStatus(form, false)
+                        throw new Error('Response error');
+                    }
+                    return response.json();
                 }
-                return response.json();
+                if (request.dataType === "jsonp") {
+                    return await ajaxCall(request)
+                }
             });
 
             const responses = await Promise.all(promises);
@@ -199,12 +219,8 @@ function ageraSync(form) {
         }
     }
 
-    async function handleForm(form) {
-        const geturl = new URL(options.endpoint).toString()
-        const geturl2 = new URL(options.endpoint).href
-        console.log("endpoint: ", geturl)
-        console.log("endpoint2: ", geturl2)
 
+    async function handleForm(form) {
         const crm = form.dataset.crm.toLowerCase();
 
         form.addEventListener("submit", async function (event) {
@@ -249,7 +265,6 @@ function ageraSync(form) {
 // Usage
 document.addEventListener('DOMContentLoaded', function () {
     const crmForms = document.querySelectorAll("[data-crm]");
-    console.log("data-crm: ", crmForms[0].dataset.crm)
     for (let form of crmForms) {
         const submitter = ageraSync(form);
         submitter.handleForm(form);
