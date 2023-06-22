@@ -1,4 +1,4 @@
-// Counter 0.1.4:
+// Counter 0.1.5:
 function ageraCounter() {
     const apiUrl = "https://utils-api.vercel.app/api/count/"
 
