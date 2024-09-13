@@ -1,4 +1,4 @@
-Export Const No = {
+export const NO = {
   1001: "Oslo",
   1003: "Oslo",
   1005: "Oslo",

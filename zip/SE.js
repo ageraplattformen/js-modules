@@ -1,4 +1,4 @@
-Export Const Se = {
+export const SE = {
   10004: "Stockholm",
   10005: "Stockholm",
   10012: "Stockholm",
