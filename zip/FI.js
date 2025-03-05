@@ -553,6 +553,7 @@ export const FI = {
   "02324": "Smartpost",
   "02325": "Pakettiautomaatti",
   "02330": "Espoo",
+  "02331": "Espoo",
   "02334": "Smartpost",
   "02335": "Pakettiautomaatti",
   "02340": "Espoo",
