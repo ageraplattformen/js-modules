@@ -351,6 +351,7 @@ export const FI = {
   "01051": "Laskut",
   "01053": "Finnair",
   "01055": "Iss",
+  "01088": "Vantaan Ja Keravan Hyvinvointi",
   "01120": "Västerskog",
   "01150": "Söderkulla",
   "01151": "Söderkulla",
