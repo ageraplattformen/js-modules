@@ -30,7 +30,6 @@ export const FI = {
   "00037": "Eurocard",
   "00038": "Logica",
   "00039": "Valio",
-  "00040": "Sanoma",
   "00041": "Elo",
   "00042": "Itapsa",
   "00043": "Edita",
